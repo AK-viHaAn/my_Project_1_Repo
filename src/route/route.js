@@ -13,7 +13,7 @@ router.post("/login", authorController.loginAuthor)
 
 router.post("/blogs", authMW.authenticate, blogController.createBlog) //create Blog
 
-router.get("/blogs", authMW.authenticate, blogController.getFilteredBlog) // get by filter Blog
+router.get("/blogs", blogController.getFilteredBlog) // get by filter Blog
 
 router.put("/blogs/:blogId", authMW.authenticate, authMW.authorise, blogController.putBlog) // update data
 

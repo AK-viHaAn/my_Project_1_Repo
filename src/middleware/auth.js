@@ -10,7 +10,7 @@ const authenticate = async function (req, res, next) {
   }
 
   jwt.verify(token, "room-2-secret-key", (error, decodedtoken) => {
-      if (error) return res.status(401).send({ status: false, msg: "Authontication faild" });
+      if (error) return res.status(401).send({ status: false, msg: "Authontication failed" });
       else { req.decodedtoken = decodedtoken;
          return next()}
         });

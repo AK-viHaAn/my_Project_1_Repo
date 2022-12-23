@@ -63,10 +63,10 @@ const loginAuthor = async function (req, res) {
   let emailId = req.body.email;
   let password = req.body.password;
   try {
-    if (!(emailId||password)) {
-      return res.status(400).send({ status: false, msg: "Email Id and Password are mandatory for login" })
+    if (!(emailId && password)) {
+      return res.status(400).send({ status: false, msg: "Email Id and Password both are mandatory for login" })
     }
-
+  
     let author = await authorModel.findOne({ email: emailId, password: password });
     if (!author) {return res.status(404).send({status: false,msg: "Author not found with this EmailId and Password",})}
 

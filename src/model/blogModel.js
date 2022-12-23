@@ -12,7 +12,7 @@ const blogSchema = new mongoose.Schema({
     authorId: { 
         type: ObjectId, 
         required: true, 
-        ref: "authorsName" 
+        ref: "finalauthorsName" 
     },
     tags: [String],
     category: { 
@@ -41,4 +41,4 @@ const blogSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 
-module.exports = mongoose.model('blogs', blogSchema)
+module.exports = mongoose.model('finalblogs', blogSchema)

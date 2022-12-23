@@ -21,7 +21,7 @@ const createBlog = async function (req, res) {
         }
         let isPublished = req.body.isPublished
         if (isPublished == true) {
-            let date = new Date()
+            let date = new Date() 
             req.body.publishedAt = date
         }
 
@@ -101,31 +101,36 @@ const deleteBlogById = async function(req,res){
 
 
 
-const DeleteBlog = async function (req, res) {
-    try {
-        let queryParams = req.query
-        if (!req.query.authorId){return res.status(400).send({status:false, msg:"AuthorId is mandotary in Query params "})}
-        let token = req.headers["x-api-key"];
-        let decodedToken = jwt.verify(token, "room-2-secret-key");
-        if (decodedToken.authorId.toString() != queryParams.authorId) {
-            return res.status(403).send({ message: "You are not Authorised" })
-        }
-        
-
-        let perfectDate = new Date()
-        let Blog = await blogModel.updateMany({ isDeleted: false, isPublished: true, ...queryParams }, { $set: { isDeleted: true, deletedAt: perfectDate } });
-        if (!Blog) {
-           return res.status(404).send({ msg: "document doesnt exist" })
-        }
-        else {
-           return res.status(200).send()
-        }
-
-    } catch (err) {
-       return res.status(500).send({ msg: "Error", error: err.message })
-    }
-}
-
+const DeleteBlog = async function (req, res) { 
+    try { 
+      let queryParams = req.query; 
+       
+   
+      const date = moment().format(); //FOR DATE 
+      
+      const Token = req.headers["x-api-key"]; 
+      const decodedtoken = jwt.verify(Token, "room-2-secret-key") 
+      let id = decodedtoken.authorId 
+   
+      const Blog = await blogModel.updateMany( 
+        { isDeleted: false, authorId:id, ...queryParams }, 
+        { $set: { isDeleted: true,isPublished:false } } 
+      ); 
+   
+      if (Blog.matchedCount == 0) { 
+        return res 
+          .status(404) 
+          .send({ status: false, msg: "document doesnt exist" }); 
+      } 
+   
+      if (Blog) { 
+        return res.status(200).send({ status: true, msg: Blog }); 
+      } 
+    } catch (err) { 
+     
+      return res.status(500).send({ msg: "Error", error: err.message }); 
+    } 
+  };
 
 
 module.exports.createBlog = createBlog
