@@ -12,11 +12,11 @@ mongoose.connect("mongodb+srv://viHAan:vihaan@projectofroom2.q2ars7d.mongodb.net
 )
  .then( () =>  console.log("MongoDb is connected") )
  .catch( err => console.log(err))
-  app.use('/',route)
+  app.use('/',route) 
 
 
 
   app.listen(process.env.PORT || 3000,function (){
-    console.log('Express app running on port'+ (process.env.PORT || 3000))
+    console.log('Express app running on port '+ (process.env.PORT || 3000))
   });
 

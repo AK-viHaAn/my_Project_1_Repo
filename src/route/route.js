@@ -9,6 +9,7 @@ const authMW = require("../middleware/auth.js")
 
 
 router.post("/authors", authorController.createAuthor) // create author
+
 router.post("/login", authorController.loginAuthor)
 
 router.post("/blogs", authMW.authenticate, blogController.createBlog) //create Blog
